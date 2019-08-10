@@ -36,6 +36,7 @@ group :test do
   gem 'rails-controller-testing', '~> 1.0', '>= 1.0.4'
   gem 'rspec-rails', '~> 3.8', '>= 3.8.2'
   gem 'capybara', '~> 3.28'
+  gem 'webmock'
 end
 
 

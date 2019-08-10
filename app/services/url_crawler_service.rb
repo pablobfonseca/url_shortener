@@ -12,9 +12,12 @@ class UrlCrawlerService
   attr_reader :url
 
   def get_title
-    document = HTTParty.get(url.original_url)
-    parsed_document = Nokogiri::HTML(document.body)
-
-    parsed_document.search('title').text
+    begin
+      document = HTTParty.get(url.original_url)
+      parsed_document = Nokogiri::HTML(document.body)
+      parsed_document.search('title').text
+    rescue SocketError
+      "Not valid"
+    end
   end
 end

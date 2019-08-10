@@ -26,6 +26,9 @@ describe UrlCreateService do
 
     it 'crawls the url and stores the title' do
       Sidekiq::Testing.inline! do
+        stub_request(:get, "https://google.com")
+          .and_return(status: 200, body: "<title>Google</title>")
+
         url = subject.perform
 
         expect(url.reload.title).to eq "Google"
