@@ -1,7 +1,2 @@
 <%= render 'layouts/errors' %>
-
-<%= form_for @url, url: urls_path do |f| %>
-  <%= f.text_field :original_url %>
-
-  <%= f.submit "Shorten" %>
-<% end %>
+<%= render 'form' %>

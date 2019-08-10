@@ -14,6 +14,16 @@ describe UrlCreateService do
       expect(url.shortened_url).to eq "123abc"
     end
 
+    it 'returns the url if already exists' do
+      url = Url.create(original_url: "https://google.com")
+
+      expect {
+        result = subject.perform
+      
+        expect(result).to eq url
+      }.not_to change(Url, :count)
+    end
+
     it 'crawls the url and stores the title' do
       Sidekiq::Testing.inline! do
         url = subject.perform

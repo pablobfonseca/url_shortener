@@ -1,0 +1,9 @@
+<div>
+  <%= form_for @form, url: urls_path do |f| %>
+    <%= f.text_field :original_url %>
+
+    <%= f.submit "Shorten" %>
+  <% end %>
+</div>
+
+<%= shortened_url(@url) %>

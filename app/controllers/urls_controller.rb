@@ -1,20 +1,31 @@
 class UrlsController < ApplicationController
+
   def index
-    @url = UrlForm.new
+    @form = UrlForm.new
     @urls = Url.all
+  end
+
+  def show
+    url = Url.find_by(shortened_url: params[:shortened_url])
+
+    if url.present?
+      redirect_to url.original_url, status: 301
+    else
+      render_404
+    end
   end
     
   def create
-    @url = UrlForm.new(url_params)
+    @form = UrlForm.new(url_params)
 
-    if @url.valid?
-      UrlCreateService.new(url_params).perform
+    if @form.valid?
+      @url = UrlCreateService.new(url_params).perform
 
-      redirect_to urls_path, notice: t('.success')
+      render partial: 'form'
     else
       @urls = Url.all
 
-      render :index, notice: @url.errors.full_messages
+      render :index, notice: @form.errors.full_messages
     end
   end
 
@@ -22,5 +33,9 @@ class UrlsController < ApplicationController
 
   def url_params
     params.require(:url_form).permit(:original_url)
+  end
+
+  def shortened_url(url)
+    "#{Rails.configuration.url_app['url']}/#{url.shortened_url}"
   end
 end

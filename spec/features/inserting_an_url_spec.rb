@@ -9,7 +9,11 @@ feature 'When I insert' do
         fill_in "url_form_original_url", with: "https://google.com"
         click_button "Shorten"
       }.to change(Url, :count)
-      
+
+      url = Url.last
+
+      shortened_url = "#{Rails.configuration.url_app['url']}/#{url.shortened_url}"
+      expect(page).to have_content(shortened_url)
     end
   end
 
