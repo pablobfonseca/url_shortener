@@ -1,29 +1,7 @@
 <%= render 'layouts/errors' %>
 
-<%= form_for @url do |f| %>
+<%= form_for @url, url: urls_path do |f| %>
   <%= f.text_field :original_url %>
 
-  <%= f.submit "Submit" %>
+  <%= f.submit "Shorten" %>
 <% end %>
-
-
-<div class="urls">
-  <h2>Top 100 most frequently accessed URLs</h2>
-
-  <table>
-    <th>
-      <td>ID</td>
-      <td>URL</td>
-      <td>Access</td>
-    </th>
-    <tbody>
-      <% @urls.each do |url|%>
-	<tr>
-	  <td><%= url.id %></td>
-	  <td><%= url.shortened_url%></td>
-	  <td><%= url.accesses %></td>
-	</tr>
-      <% end %>
-    </tbody>
-  </table>
-</div>

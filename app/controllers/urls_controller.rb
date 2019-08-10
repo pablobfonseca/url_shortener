@@ -1,16 +1,19 @@
 class UrlsController < ApplicationController
   def index
-    @url = Url.new
+    @url = UrlForm.new
     @urls = Url.all
   end
     
   def create
-    @url = Url.new(url_params)
+    @url = UrlForm.new(url_params)
 
-    if @url.save
-      redirect_to urls_path, notice: "Foo"
+    if @url.valid?
+      UrlCreateService.new(url_params).perform
+
+      redirect_to urls_path, notice: t('.success')
     else
       @urls = Url.all
+
       render :index, notice: @url.errors.full_messages
     end
   end
@@ -18,6 +21,6 @@ class UrlsController < ApplicationController
   private
 
   def url_params
-    params.require(:url).permit(:original_url)
+    params.require(:url_form).permit(:original_url)
   end
 end

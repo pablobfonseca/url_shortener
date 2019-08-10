@@ -1,0 +1,4 @@
+development:
+  url: http://localhost:3000
+test:
+  url: http://test.localhost:3000
