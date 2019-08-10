@@ -1,0 +1,7 @@
+before_install:
+  - gem update --system
+  - gem install bundler
+services:
+  - postgresql
+before_script:
+  - psql -c 'create database url_shortener_test;' -U postgres
