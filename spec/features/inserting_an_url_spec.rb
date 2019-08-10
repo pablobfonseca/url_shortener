@@ -18,7 +18,7 @@ feature 'When I insert' do
       visit root_path
 
       expect {
-        fill_in "url_original_url", with: "foo"
+        fill_in "url_form_original_url", with: "foo"
         click_button "Shorten"
       }.not_to change(Url, :count)
 

@@ -6,7 +6,7 @@ class UrlCreateService
   def perform
     url = Url.create(
       original_url: original_url,
-      shortened_url: shorten_url
+      shortened_url: SecureRandom.base58(6)
     )
 
     crawls_title(url.id)
@@ -16,12 +16,6 @@ class UrlCreateService
 
   private
   attr_reader :original_url
-
-  def shorten_url
-    token = SecureRandom.base58(6)
-
-    "#{Rails.configuration.url_app['url']}/#{token}"
-  end
 
   def crawls_title(url_id)
     UrlCrawlerWorker.perform_async(url_id)
