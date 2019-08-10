@@ -16,6 +16,10 @@ gem 'bootsnap', '>= 1.1.0', require: false
 
 gem 'validate_url', '~> 1.0', '>= 1.0.8'
 
+gem 'sidekiq', '~> 5.2', '>= 5.2.7'
+
+gem 'httparty', '~> 0.17.0'
+
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
