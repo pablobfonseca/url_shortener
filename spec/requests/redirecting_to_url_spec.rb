@@ -5,7 +5,9 @@ describe 'Requesting the shortened url', type: :request do
     it 'redirects to the original url' do
       url = Url.create(original_url: 'https://google.com', shortened_url: '123abc')
 
-      get url_path("123abc")
+      expect {
+        get url_path("123abc")
+      }.to change { url.reload.accesses }.to(1)
 
       expect(response).to redirect_to url.original_url
       expect(response).to have_http_status(301)

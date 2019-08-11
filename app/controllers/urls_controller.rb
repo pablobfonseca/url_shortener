@@ -5,10 +5,15 @@ class UrlsController < ApplicationController
     @urls = Url.all
   end
 
+  def popular
+    @urls = Url.popular
+  end
+
   def show
     url = Url.find_by(shortened_url: params[:shortened_url])
 
     if url.present?
+      url.increment!(:accesses)
       redirect_to url.original_url, status: 301
     else
       render_404
