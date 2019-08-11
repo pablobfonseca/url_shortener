@@ -1,9 +1,9 @@
 <% if @form.errors.any? %>
   <h2><%= pluralize(@form.errors.count, "error") %> prohibited this url from being saved:</h2>
 
-  <ul class="errors">
+  <div class="alert alert-danger">
     <% @form.errors.full_messages.each do |message| %>
-      <li><%= message %></li>
+      <span><%= message %></span>
     <% end %>
-  </ul>
+  </div>
 <% end %>

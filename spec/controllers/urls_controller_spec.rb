@@ -20,7 +20,7 @@ describe UrlsController, type: :controller do
       url = Url.last
 
       expect(assigns(:url)).to eq url
-      expect(response).to render_template('urls/_form')
+      expect(response).to render_template('urls/index')
     end
   end
 end

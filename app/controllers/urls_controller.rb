@@ -26,7 +26,7 @@ class UrlsController < ApplicationController
     if @form.valid?
       @url = UrlCreateService.new(url_params).perform
 
-      render partial: 'form'
+      render template: 'urls/index'
     else
       @urls = Url.all
 
