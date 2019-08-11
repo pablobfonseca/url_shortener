@@ -20,6 +20,8 @@ gem 'sidekiq', '~> 5.2', '>= 5.2.7'
 
 gem 'httparty', '~> 0.17.0'
 
+gem 'redis', '~> 4.1', '>= 4.1.2'
+
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
