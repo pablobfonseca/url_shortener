@@ -36,8 +36,7 @@ jobs:
         fi
 
     - name: Create pull request
-      needs: diff
-      if: needs.diff.outputs.file_changed == 'true'
+      if: steps.diff.outputs.file_changed == 'true'
       id: pull-request
       uses: repo-sync/pull-request@master
       with:
