@@ -31,6 +31,7 @@ jobs:
         {
           dyff between --set-exit-code config/locales/en.new.yml config/locales/en.yml
         } || {
+          echo "Changing file"
           rm config/locales/en.yml
           mv config/locales/en.new.yml config/locales/en.yml
           echo 'file_changed=true' >> $GITHUB_OUTPUT
