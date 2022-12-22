@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       created-pr: ${{ steps.pr-created.outputs.created }}
+      diff: ${{ steps.diff.outputs.file_changed }}
 
     steps:
     - name: Checkout source code
@@ -23,20 +24,20 @@ jobs:
 
     - name: Request locale file and diff
       id: diff
+      continue-on-error: true
       run: |
         curl "https://link.storjshare.io/s/jwn76z454uywl3afnx4cjypx4lba/demo-bucket/en.yml?download=1" > config/locales/en.new.yml
         dyff between --set-exit-code config/locales/en.new.yml config/locales/en.yml
 
-    - name: Update file
-      id: update_file
-      if: ${{ failure() }}
-      run: |
-        rm config/locales/en.yml
-        mv config/locales/en.new.yml config/locales/en.yml
-        echo "file changed"
+        if [ $? -eq 1 ]; then
+          rm config/locales/en.yml
+          mv config/locales/en.new.yml config/locales/en.yml
+          echo 'file_changed=true' >> $GITHUB_OUTPUT
+        fi
 
     - name: Create pull request
-      if: "!contains(steps.update_file.output, 'file changed')"
+      needs: diff
+      if: needs.diff.outputs.file_changed == 'true'
       id: pull-request
       uses: repo-sync/pull-request@master
       with:
