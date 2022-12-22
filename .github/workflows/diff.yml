@@ -25,11 +25,11 @@ jobs:
       id: diff
       run: |
         curl "https://link.storjshare.io/s/jwn76z454uywl3afnx4cjypx4lba/demo-bucket/en.yml?download=1" > config/locales/en.new.yml
-        dyff between config/locales/en.new.yml config/locales/en.yml
+        dyff between --set-exit-code config/locales/en.new.yml config/locales/en.yml
 
     - name: Update file
       id: update_file
-      if: "!contains(steps.diff.output, 'returned no differences')"
+      if: ${{ failure() }}
       run: |
         rm config/locales/en.yml
         mv config/locales/en.new.yml config/locales/en.yml
