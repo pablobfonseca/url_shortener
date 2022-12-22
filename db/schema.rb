@@ -10,10 +10,46 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_11_010218) do
+ActiveRecord::Schema.define(version: 2022_12_22_130560) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "migrations", id: false, force: :cascade do |t|
+    t.text "version", null: false
+  end
+
+  create_table "newsletter_subscribers", primary_key: "email", id: :text, force: :cascade do |t|
+    t.text "token", null: false
+    t.boolean "confirmed", default: false, null: false
+    t.boolean "active", default: true, null: false
+    t.datetime "created", default: -> { "now()" }, null: false
+    t.datetime "updated", default: -> { "now()" }, null: false
+  end
+
+  create_table "tolk_locales", id: :serial, force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["name"], name: "index_tolk_locales_on_name", unique: true
+  end
+
+  create_table "tolk_phrases", id: :serial, force: :cascade do |t|
+    t.text "key"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "tolk_translations", id: :serial, force: :cascade do |t|
+    t.integer "phrase_id"
+    t.integer "locale_id"
+    t.text "text"
+    t.text "previous_text"
+    t.boolean "primary_updated", default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["phrase_id", "locale_id"], name: "index_tolk_translations_on_phrase_id_and_locale_id", unique: true
+  end
 
   create_table "urls", force: :cascade do |t|
     t.string "title"

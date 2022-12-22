@@ -2,3 +2,8 @@ en:
   urls:
     create:
       success: Url has been shortened successfully!
+    index:
+      title: URL Shortener
+    form:
+      submit: Shorten
+      popular_urls: Popular URLs

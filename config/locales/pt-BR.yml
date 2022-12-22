@@ -1,0 +1,49 @@
+---
+"pt-BR":
+  "activerecord":
+    "errors":
+      "messages":
+        "record_invalid": >-
+          Validação falhou: %{errors}
+  "date":
+    "abbr_day_names":
+    - >-
+      Dom
+    - >-
+      Seg
+    - >-
+      Ter
+    - >-
+      Qua
+    - >-
+      Qui
+    - >-
+      Sex
+    - >-
+      Sab
+    "abbr_month_names":
+    -
+    - >-
+      Jan
+    - >-
+      Fev
+    - >-
+      Mar
+    - >-
+      Abr
+    - >-
+      Maio
+    - >-
+      Jun
+    - >-
+      Jul
+    - >-
+      Ago
+    - >-
+      Set
+    - >-
+      Out
+    - >-
+      Nov
+    - >-
+      Dez

@@ -2,10 +2,10 @@
   <%= form_for @form, url: urls_path, html: { class: "form-inline" } do |f| %>
     <div class="row">
       <div class="col-md-6">
-	<%= f.text_field :original_url, class: "form-control" %>
+        <%= f.text_field :original_url, class: "form-control" %>
       </div>
       <div class="col-md-6">
-	<%= f.submit "Shorten", class: "btn btn-primary"%>
+        <%= f.submit t('.submit'), class: "btn btn-primary"%>
       </div>
     </div>
   <% end %>
@@ -16,5 +16,5 @@
 </div>
 
 <div class="popular-link">
-  <%= link_to "Popular URLs", popular_urls_path %>
+  <%= link_to t('.popular_urls'), popular_urls_path %>
 </div>
