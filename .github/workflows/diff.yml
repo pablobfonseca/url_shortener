@@ -24,7 +24,7 @@ jobs:
     - name: Request locale file and diff
       id: diff
       run: |
-        curl "https://uc1486320ac6915c85a2694059d4.dl.dropboxusercontent.com/cd/0/get/BzHrpGiZl55y_q1hiGNjCtBw32SpZNY7V57HU3hGSYOpYQl4DujOmHPwm1g4nGTKSNxw4bRJuTwgbFUJebqEwgd5xXRMrbSwyo8PsULapCfXzr5VXraHirUAcrhGvKf8e_EQf6AWsYPD9orc9BuDGSJZVd8mtKYAutXcU-mOiajPkOr9i8SiOgzvCdAl_0et2rs/file" > config/locales/en.new.yml
+        curl "https://link.storjshare.io/s/jwn76z454uywl3afnx4cjypx4lba/demo-bucket/en.yml?download=1" > config/locales/en.new.yml
         dyff between --set-exit-code config/locales/en.new.yml config/locales/en.yml
 
         if [ $? -eq 1 ]; then
