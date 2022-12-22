@@ -27,14 +27,15 @@ jobs:
       continue-on-error: true
       run: |
         curl "https://link.storjshare.io/s/jwn76z454uywl3afnx4cjypx4lba/demo-bucket/en.yml?download=1" > config/locales/en.new.yml
-        dyff between --set-exit-code config/locales/en.new.yml config/locales/en.yml
 
-        if [ $? -eq 1 ]; then
+        {
+          dyff between --set-exit-code config/locales/en.new.yml config/locales/en.yml
+        } || {
           rm config/locales/en.yml
           mv config/locales/en.new.yml config/locales/en.yml
           echo 'file_changed=true' >> $GITHUB_OUTPUT
-        fi
-
+        }
+        
     - name: Create pull request
       if: steps.diff.outputs.file_changed == 'true'
       id: pull-request
