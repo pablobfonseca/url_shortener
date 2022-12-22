@@ -1,0 +1,55 @@
+name: Create locale PR
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  pull-request:
+    if: "!contains(github.event.head_commit.message, '[skip deploy]') && !startsWith(github.event.head_commit.message, 'ci: bumps version to')"
+    runs-on: ubuntu-latest
+    outputs:
+      created-pr: ${{ steps.pr-created.outputs.created }}
+
+    steps:
+    - name: Checkout source code
+      uses: 'actions/checkout@v2'
+      with:
+        ref: ${{ github.ref }}
+
+    - name: Install diff tool
+      run: |
+        curl --silent --location https://git.io/JYfAY | bash
+
+    - name: Request locale file and diff
+      id: diff
+      run: |
+        curl "https://uc1486320ac6915c85a2694059d4.dl.dropboxusercontent.com/cd/0/get/BzHrpGiZl55y_q1hiGNjCtBw32SpZNY7V57HU3hGSYOpYQl4DujOmHPwm1g4nGTKSNxw4bRJuTwgbFUJebqEwgd5xXRMrbSwyo8PsULapCfXzr5VXraHirUAcrhGvKf8e_EQf6AWsYPD9orc9BuDGSJZVd8mtKYAutXcU-mOiajPkOr9i8SiOgzvCdAl_0et2rs/file" > config/locales/en.new.yml
+        dyff between --set-exit-code config/locales/en.new.yml config/locales/en.yml
+
+        if [ $? -eq 1 ]; then
+          rm config/locales/en.yml
+          mv config/locales/en.new.yml config/locales/en.yml
+          echo "file changed"
+        fi
+
+    - name: Create pull request
+      if: "!contains(steps.diff.output, 'file changed')"
+      id: pull-request
+      uses: repo-sync/pull-request@master
+      with:
+        destination_branch: "master"
+        pr_title: "Update main locale"
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Check PR creation
+      id: pr-created
+      env:
+        PR_NUMBER: ${{steps.pull-request.outputs.pr_number}}
+      run: |
+        if [[ -n "$PR_NUMBER" ]]
+        then
+          echo 'created=true' >> $GITHUB_OUTPUT
+        else
+          echo 'created=false' >> $GITHUB_OUTPUT
+        fi
