@@ -18,7 +18,7 @@ gem 'validate_url', '~> 1.0', '>= 1.0.8'
 
 gem 'sidekiq', '~> 5.2', '>= 5.2.7'
 
-gem 'httparty', '~> 0.17.0'
+gem 'httparty', '~> 0.21.0'
 
 gem 'redis', '~> 4.1', '>= 4.1.2'
 
